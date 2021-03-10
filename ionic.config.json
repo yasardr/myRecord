@@ -1,0 +1,7 @@
+{
+  "name": "myRecords",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
