@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../../services/record.service';
 import { List } from '../../models/list.model';
 import { ListItem } from '../../models/list-item.model';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add',
@@ -13,10 +14,12 @@ export class AddPage implements OnInit {
 
   list: List;
   nameItem = '';
+  moneyItem = null;
 
   constructor(
     private recordService: RecordService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public alertController: AlertController
   ) {
     const listId = this.route.snapshot.paramMap.get('listId');
     this.list = this.recordService.getList(listId);
@@ -26,12 +29,14 @@ export class AddPage implements OnInit {
   }
 
   addItem() {
-    if (this.nameItem.length === 0) {
+    if (this.nameItem.length === 0 || this.moneyItem === null || this.moneyItem <= 0) {
       return;
     }
-    const newItem = new ListItem(this.nameItem, 0);
+    const newItem = new ListItem(this.nameItem, this.moneyItem);
     this.list.items.push(newItem);
+    this.list.total += this.moneyItem;
     this.nameItem = '';
+    this.moneyItem = null;
     this.recordService.saveStorage();
   }
 
@@ -51,6 +56,7 @@ export class AddPage implements OnInit {
   }
 
   deleteItem(i: number) {
+    this.list.total -= this.list.items[i].money;
     this.list.items.splice(i, 1);
     this.recordService.saveStorage();
   }

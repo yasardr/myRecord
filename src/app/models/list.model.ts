@@ -8,6 +8,7 @@ export class List {
     finished_at: Date;
     finished: boolean;
     items: ListItem[];
+    total: number;
 
     constructor( titulo: string ) {
         this.title = titulo;
@@ -15,5 +16,6 @@ export class List {
         this.finished = false;
         this.items = [];
         this.id = new Date().getTime();
+        this.total = 0;
     }
 }
