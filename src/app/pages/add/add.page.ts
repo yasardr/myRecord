@@ -35,4 +35,24 @@ export class AddPage implements OnInit {
     this.recordService.saveStorage();
   }
 
+  changeCheck(item: ListItem) {
+    const pending = this.list.items
+                          .filter(itemData => !itemData.completed)
+                          .length;
+    if (pending === 0) {
+      this.list.finished_at = new Date();
+      this.list.finished = true;
+    } else {
+      this.list.finished_at = null;
+      this.list.finished = false;
+    }
+
+    this.recordService.saveStorage();
+  }
+
+  deleteItem(i: number) {
+    this.list.items.splice(i, 1);
+    this.recordService.saveStorage();
+  }
+
 }

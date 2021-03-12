@@ -11,7 +11,7 @@ import { RecordService } from '../../services/record.service';
 export class Tab1Page {
 
   constructor(
-    public recordService: RecordService,
+    private recordService: RecordService,
     private router: Router,
     public alertController: AlertController
   ) {}

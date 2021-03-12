@@ -19,6 +19,11 @@ export class RecordService {
     return newList.id;
   }
 
+  deleteList( list: List ) {
+    this.list = this.list.filter( listData => listData.id !== list.id);
+    this.saveStorage();
+  }
+
   getList( id:string | number ) {
     id = Number(id);
     return this.list.find( listData => listData.id === id );
