@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../../services/record.service';
 import { List } from '../../models/list.model';
 import { ListItem } from '../../models/list-item.model';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add',
@@ -19,7 +19,8 @@ export class AddPage implements OnInit {
   constructor(
     private recordService: RecordService,
     private route: ActivatedRoute,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public actionSheetController: ActionSheetController
   ) {
     const listId = this.route.snapshot.paramMap.get('listId');
     this.list = this.recordService.getList(listId);
@@ -40,7 +41,7 @@ export class AddPage implements OnInit {
     this.recordService.saveStorage();
   }
 
-  changeCheck(item: ListItem) {
+  changeCheck() {
     const pending = this.list.items
                           .filter(itemData => !itemData.completed)
                           .length;
@@ -59,6 +60,29 @@ export class AddPage implements OnInit {
     this.list.total -= this.list.items[i].money;
     this.list.items.splice(i, 1);
     this.recordService.saveStorage();
+  }
+
+  async openOptions() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Opciones',
+      buttons: [{
+        text: 'Seleccionar todo',
+        handler: () => {
+          this.list.items.forEach(item => item.completed = true);
+          this.recordService.saveStorage();
+        }
+      }, {
+        text: 'Ninguno',
+        handler: () => {
+          this.list.items.forEach(item => item.completed = false);
+          this.recordService.saveStorage();
+        }
+      }, {
+        text: 'Cancelar',
+        role: 'cancel',
+      }]
+    });
+    actionSheet.present();
   }
 
 }

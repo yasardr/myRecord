@@ -3,6 +3,11 @@
     <ion-buttons>
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="openOptions()">
+        <ion-icon slot="icon-only" ios="ellipsis-vertical" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{list.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +37,7 @@
       <ion-item>
         <ion-checkbox slot="start" 
                       [(ngModel)]="item.completed"
-                      (ionChange)="changeCheck(item)"></ion-checkbox>
+                      (ionChange)="changeCheck()"></ion-checkbox>
         <ion-label>{{item.name}} {{item.money}}</ion-label>
       </ion-item>
 
