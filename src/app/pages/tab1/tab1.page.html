@@ -1,7 +1,12 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="openOptionsTab1()">
+        <ion-icon slot="icon-only" ios="ellipsis-vertical" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
-      Listado
+      Listado ({{user}})
     </ion-title>
   </ion-toolbar>
 </ion-header>
